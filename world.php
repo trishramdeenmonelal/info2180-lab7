@@ -1,13 +1,14 @@
 <?php
 
 $host = getenv('IP');
-$username = getenv('C9_USER');
+$username = 'trishramdeenmone';//getenv('C9_USER');
 $password = '';
-$dbname = 'world';
-HGFYDHFG
-$conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+$dbname= 'world';
+$country = $_GET['country'];
 
-$stmt = $conn->query("SELECT * FROM countries");
+$conn = new PDO("mysql:host=" . $host .";dbname=" . $dbname, $username, $password);
+
+$stmt = $conn->query("SELECT * FROM countries WHERE name LIKE '%$country%'");
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
