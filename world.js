@@ -20,7 +20,7 @@ window.onload=function(){
             }*/
         };
         
-        xml.open("GET","world.php?country="+inputVal.value,true);
+        xml.open("GET","world.php?all=true",true);
         // The above line should really have "world.php?country=" instead of
         // "world.php?q=". Remember in your world.php file you have $_GET['country']
         xml.send();
