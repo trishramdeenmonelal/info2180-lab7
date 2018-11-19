@@ -6,18 +6,28 @@ window.onload=function(){
     
     lookup.addEventListener("click",function(){
         let xml = new XMLHttpRequest();
-        xml.onreadystatechange= function(){
-            if(xml.status === 200 && xml.onreadystatechange=== 4){
+        xml.onreadystatechange = function() {
+            if(xml.readyState === XMLHttpRequest.DONE){
+                if (xml.status=== 200){
                 result.innerHTML= xml.responseText;
+                }
             }
+            // Try changing the above if statement to something like the following:
+            /*if (xml.readyState === XMLHttpRequest.DONE) {
+                if (xml.status === 200) {
+                    result.innerHTML = xml.responseText;
+                }
+            }*/
         };
         
-        xml.open("GET","world.php?q="+inputVal.value,true);
+        xml.open("GET","world.php?country="+inputVal.value,true);
+        // The above line should really have "world.php?country=" instead of
+        // "world.php?q=". Remember in your world.php file you have $_GET['country']
         xml.send();
         
     });
     
-    
+};   
  
-};
+
 
