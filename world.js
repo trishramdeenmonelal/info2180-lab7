@@ -1,33 +1,29 @@
-window.onload=function(){
-    var lookup = document.getElementById("lookup");
-    var inputVal = document.getElementById("country");
-    var result = document.getElementById("result");
+window.onload =function(){
+    var lookup = document.getElementById('lookup');
+    var result = document.getElementById('result');
+    var inputVal = document.getElementById('country');
+    var allChecked = document.getElementById('checked');
     
+    var xml = new XMLHttpRequest();
     
-    lookup.addEventListener("click",function(){
-        let xml = new XMLHttpRequest();
-        xml.onreadystatechange = function() {
-            if(xml.readyState === XMLHttpRequest.DONE){
-                if (xml.status=== 200){
-                result.innerHTML= xml.responseText;
-                }
-            }
-            // Try changing the above if statement to something like the following:
-            /*if (xml.readyState === XMLHttpRequest.DONE) {
-                if (xml.status === 200) {
-                    result.innerHTML = xml.responseText;
-                }
-            }*/
-        };
-        
-        xml.open("GET","world.php?all=true",true);
-        // The above line should really have "world.php?country=" instead of
-        // "world.php?q=". Remember in your world.php file you have $_GET['country']
+    lookup.addEventListener("click", function(){
+        xml.onreadystatechange = handleRequest;
+        if (allChecked.checked) {
+            xml.open('GET', 'world.php?all=true', true);
+        } else {
+            xml.open('GET', `world.php?country=${inputVal.value}`, true);
+        }
         xml.send();
-        
     });
     
-};   
- 
-
-
+    function handleRequest (){
+        if (xml.readyState === XMLHttpRequest.DONE) {
+            if (xml.status === 200) {
+                result.innerHTML = xml.responseText;
+            } else {
+                alert('There was a problem processing this request.');
+            }
+        } 
+    }
+    
+};
